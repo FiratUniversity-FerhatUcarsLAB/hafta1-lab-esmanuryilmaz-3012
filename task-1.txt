@@ -1,4 +1,163 @@
-Öğrenci No:
-AD-SOYAD:
+Öğrenci No: 250541033
+AD-SOYAD: Esmanur Yılmaz
 
 Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:
+
+Benim seçtiğim görev adı "Sınav Çalışma Planı" ve ödevi ChatGPT ile yaptım. 
+Ödevi yaparken öncelikle kaba bir taslağım olsun diye ChatGPT'ye "Bana algoritmik sırada sınava çalışma planı yaz" komutunu verdim.
+
+ChatGPT'nin cevabı;
+Tabii! İşte algoritmik bir sıra halinde kısa bir sınava çalışma planı:
+
+1. **Hedef Belirle** → Sınav kapsamını ve öncelikli konuları listele.
+2. **Zaman Planı Yap** → Kalan günleri konulara dağıt.
+3. **Kaynak Seç** → Hangi kitap, ders notu veya soru bankası kullanılacak belirle.
+4. **Konu Tekrarı** → Her gün belirlenen konuyu kısa özet çıkararak çalış.
+5. **Örnek Soru Çöz** → Konu sonunda mutlaka 10-15 soru çöz.
+6. **Eksik Analizi** → Yanlış yaptığın soruları işaretle, konuyu tekrar gözden geçir.
+7. **Ders Karışıklığını Önle** → Farklı dersleri günlere böl, aynı gün 2’den fazla ağır ders koyma.
+8. **Genel Tekrar** → Sınavdan önce son 2 gün tüm özetlere ve işaretlenen zor sorulara dön.
+9. **Deneme Çöz** → En az 1-2 tam deneme sınavı çöz ve süre tut.
+10. **Dinlenme & Uyku** → Son gece iyi dinlen, uyku düzenini bozma.
+
+İstersen ben sana bunu **günlük detaylı program** haline de getirebilirim. İster misin?
+
+Açıkçası burada fazlalık olarak gördüğüm unsurlar ve sıralamasını beğenmediğim kısımlar vardı, oraları ChatGPT'ye tekrar yazdırmak yerine kendim yazmaya karar verdim ve hocalarımız bize hep bilgisayarlar aptal dediği için kodunu yazmasını isterken olabildiğince açıklayıcı yazmaya çalıştım. O yüzden burayı kendime göre uzun uzun düzenleyip yeni bir komut verdim. "Şimdi sana yazacağım açıklamaya göre bunun için pseudocode yazmanı istiyorum. Öncelikle genel bir konu testi çözülmesi lazım. Testin sonuçlarına göre bir if durumu oluşacak, bu if durumu bilinen ve bilinmeyen konular için olacak, bilinmeyen konular öncelikli ve bilinen konular en son tekrar edilmeli. Hakim olunmayan konular için 45 dakika ders-15 dakika ara olmak üzere pomodoro tekniği uygulanacak. Else if ise hakim olunan, biraz da olsa kişinin zaten bilgi birikimi olan konular için olacak. Yeterli bilgi birikimi olan konular için ise 25 dakika ders-5 dakika ara şeklinde konu tekrarı için pomodoro tekniği uygulanacak. Zaman yönetimini bu şekilde ayarladıktan sonra sıra kaynak seçiminde. Burada bir if daha kullanacağız. Bilgi birikimine sahip olunmayan konular için ders videosu izlenmeli ve özet çıkarılmalı. Else if, tekrar yapacağımız konular için ve kişi kendi notlarını okuyarak oradan tekrar yapmalı. Son olarak ise tekrardan bir genel konu testi çözülmeli ve buradaki eksiklerine göre sistem başa dönmeli. Konu eksiği kalmayana kadar sistem loop'ta kalacak ve bütün konular öğrenilince sistem duracak." 
+
+ChatGPT'nin cevabı;
+Harika, çok net açıklamışsın 👌 Bu senaryoyu algoritmik olarak pseudocode şeklinde şöyle yazabiliriz:
+
+```
+BEGIN
+
+Çöz("Genel Konu Testi")
+Sonuçlar = Değerlendir(Test)
+
+WHILE (EksikKonuVar(Sonuçlar)) DO
+
+    FOR her Konu in Sonuçlar
+        
+        IF (Konu == Bilinmeyen) THEN
+            UygulaPomodoro(45dk Ders, 15dk Ara)
+            
+            // Kaynak seçimi
+            IF (BilgiBirikimiYok(Konu)) THEN
+                İzle("Ders Videosu")
+                Çıkar("Özet Notlar")
+            ELSE IF (TekrarEdilecek(Konu)) THEN
+                Oku("Kendi Notları")
+            ENDIF
+
+        ELSE IF (Konu == KısmenBilinen) THEN
+            UygulaPomodoro(25dk Ders, 5dk Ara)
+            Oku("Kendi Notları")
+            
+        ELSE IF (Konu == İyiBilinen) THEN
+            UygulaPomodoro(25dk Ders, 5dk Ara)
+            HızlıTekrar("Notlar")
+            
+        ENDIF
+
+    ENDFOR
+
+    Çöz("Genel Konu Testi")
+    Sonuçlar = Değerlendir(Test)
+
+ENDWHILE
+
+Yaz("Tüm konular öğrenildi, sistem durdu.")
+
+END
+```
+
+Bunu daha da geliştirmemi ister misin? Mesela **konu öncelik sıralaması** ekleyebilirim (önce bilinmeyen → kısmen bilinen → iyi bilinen), ya da **zaman çizelgesi** çıkarabilirim. İster misin?
+
+Sonuçtan memnun kaldığım için bu sefer bütün bunları düz metne dönüştürmesini istedim.
+ChatGPT'nin cevabı;
+Tabii! İşte algoritmanın düz metin halinde komut adımları:
+
+1. Genel konu testi çöz.
+2. Test sonuçlarını değerlendir.
+3. Eğer eksik konu varsa devam et, yoksa sistemi durdur.
+4. Sonuçlardaki her konu için sırayla:
+
+   * 4.1. Eğer konu bilinmiyorsa:
+
+     * 45 dakika ders çalış, 15 dakika ara ver (Pomodoro).
+     * Ders videosu izle ve özet çıkar.
+   * 4.2. Eğer konu kısmen biliniyorsa:
+
+     * 25 dakika ders çalış, 5 dakika ara ver (Pomodoro).
+     * Kendi notlarını oku.
+   * 4.3. Eğer konu iyi biliniyorsa:
+
+     * 25 dakika ders çalış, 5 dakika ara ver (Pomodoro).
+     * Notlardan hızlı tekrar yap.
+5. Tüm konular tamamlandıktan sonra tekrar genel konu testi çöz.
+6. Yeni sonuçları değerlendir.
+7. Eğer hala eksik konu varsa 3. adıma geri dön.
+8. Tüm konular öğrenildiğinde sistemi durdur.
+
+İstersen ben bunu sana **günlük çalışma planı** formatında da dönüştürebilirim. İstiyor musun?
+
+Buradan sonra alternatif bir yol olabilir mi diye bu sefer ChatGPT'ye sordum. "Sen olsaydın bu pseudocode'u nasıl yazardın?"
+ChatGPT'nin cevabı;
+Ben olsaydım bu pseudocode’u biraz daha **temiz, modüler** ve **insana okuması kolay** olacak şekilde yazar, her görevi fonksiyonlara ayırırdım. Böylece hem mantık hem de akış net görünür. Mesela şöyle:
+
+---
+
+```
+START
+
+// 1. Başlangıç testi
+results = SolveGeneralTest()
+
+// 2. Konu eksikleri bitene kadar döngü
+WHILE HasMissingTopics(results) DO
+
+    topics = GetTopics(results) // Testte çıkan konular
+
+    FOR topic IN topics DO
+
+        status = DetermineKnowledgeLevel(topic) 
+        // status: "unknown", "partial", "known"
+
+        // 3. Çalışma süresi ve kaynak seçimi
+        IF status == "unknown" THEN
+            ApplyPomodoro(45, 15)       // 45 dk çalışma, 15 dk ara
+            WatchVideo(topic)
+            TakeNotes(topic)
+
+        ELSE IF status == "partial" THEN
+            ApplyPomodoro(25, 5)        // 25 dk çalışma, 5 dk ara
+            ReviewOwnNotes(topic)
+
+        ELSE IF status == "known" THEN
+            ApplyPomodoro(25, 5)        // 25 dk tekrar
+            QuickReview(topic)
+
+        ENDIF
+
+    ENDFOR
+
+    // 4. Döngü sonunda tekrar test çözülür
+    results = SolveGeneralTest()
+
+ENDWHILE
+
+PRINT("Tüm konular öğrenildi. Çalışma tamamlandı.")
+
+END
+```
+
+---
+
+Böylece:
+
+* **Fonksiyonlar** (ApplyPomodoro, WatchVideo, TakeNotes vs.) her görevi net ayırıyor.
+* Okuyanın zihninde adımlar karışmıyor.
+* Döngü **baştan sona kontrol** altında.
+
+İstersen bu tarzı **flowchart (akış diyagramı)** gibi görselleştirerek de çizebilirim; bu mantığı görselde izlemek çok daha anlaşılır olur. İster misin?
+
+İki pseudocode da birbirine çok benziyor ama belli farkları var. Ama ChatGPT'nin kendi yazdığı, kodlama diline çok daha uygun.
