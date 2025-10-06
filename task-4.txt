@@ -1,4 +1,489 @@
-Öğrenci No:
-AD-SOYAD:
+Öğrenci No: 250541033
+AD-SOYAD: Esmanur Yılmaz
 
 Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:
+Seçtiğim görev "Renkleri Karıştırarak Hedef Rengi Bulma" ve bunu ChatGPT ile yaptım.
+"Renkleri karıştırarak hedef rengi bulma üzerine divide and conquer yaklaşımıyla nasıl bir algoritma yazılabilir?"
+ChatGPT'nin cevabı;
+Harika bir soru — “renkleri karıştırarak hedef rengi bulma” problemi, hem **aritmetiksel** hem de **algoritmik** açıdan ilginçtir. Bunu **Divide and Conquer (Böl ve Fethet)** yaklaşımıyla çözmek oldukça öğretici olur.
+Aşağıda adım adım nasıl düşünebileceğini anlatayım 👇
+
+---
+
+## 🎨 Problem Tanımı
+
+Elimizde çeşitli renkler (örneğin RGB formatında) var:
+`C = {C1, C2, ..., Cn}`
+Her renk bir vektör olarak düşünülebilir:
+`Ci = (Ri, Gi, Bi)`
+
+Bir **hedef renk** var:
+`T = (Rt, Gt, Bt)`
+
+Amaç:
+C içindeki renkleri **karıştırarak** (örneğin ağırlıklı ortalama alarak) hedef renge mümkün olduğunca yaklaşmak.
+
+---
+
+## ⚙️ Divide and Conquer Yaklaşımı
+
+Temel fikir:
+“Büyük bir renk kombinasyonu arama problemini küçük parçalara bölmek.”
+
+### 1. **Böl (Divide)**
+
+Renk kümesini ikiye böl:
+
+```
+Sol küme = C1...Cn/2
+Sağ küme = Cn/2+1...Cn
+```
+
+Her kümeden **tüm olası karışım renklerini** (veya belirli bir örnekleme) üret:
+
+* Sol küme → L renk uzayı
+* Sağ küme → R renk uzayı
+
+Bu, tüm renk kombinasyonlarını tek seferde aramak yerine, iki küçük uzay üzerinde çalışmanı sağlar.
+
+---
+
+### 2. **Fethet (Conquer)**
+
+Her iki alt küme için karışımların olası sonuçlarını hesapla.
+Örneğin her karışımı basitçe ağırlıklı ortalama ile temsil edebilirsin:
+
+```
+mix(Ci, Cj, w) = w * Ci + (1 - w) * Cj
+```
+
+Bu şekilde her alt kümeden ortalama (veya rastgele) karışımlar elde edilir.
+
+---
+
+### 3. **Birleştir (Combine)**
+
+Şimdi amaç:
+Sol kümeden bir renk `Lx` ve sağ kümeden bir renk `Ry` bulmak ki:
+
+```
+|Lx + Ry| / 2 ≈ T
+```
+
+Yani iki alt grubun karışımı hedef renge en yakın olsun.
+
+Bunu verimli yapmak için:
+
+* Sol kümenin sonuçlarını R’ye göre **sıralayabilir**,
+* Sağ kümeden gelen sonuçlarla **ikili arama** (binary search) yapabilirsin.
+
+Bu, klasik **"meet-in-the-middle"** stratejisidir.
+
+---
+
+## 💡 Basitleştirilmiş Pseudocode
+
+```python
+def closest_mix(colors, target):
+    if len(colors) == 1:
+        return colors[0]
+
+    mid = len(colors) // 2
+    left = colors[:mid]
+    right = colors[mid:]
+
+    left_mixes = all_mixes(left)
+    right_mixes = all_mixes(right)
+
+    best = None
+    min_dist = float('inf')
+
+    for l in left_mixes:
+        for r in right_mixes:
+            mix = average(l, r)
+            d = distance(mix, target)
+            if d < min_dist:
+                min_dist = d
+                best = mix
+
+    return best
+```
+
+Burada `all_mixes()` fonksiyonu kendi içinde yine **divide and conquer** kullanabilir (rekürsif).
+`distance()` ise renk farkını ölçer, genellikle **Euclidean distance** (RGB farkı) uygundur.
+
+---
+
+## ⚡ Optimizasyonlar
+
+* **Yakınsama hızını artırmak için** rastgele örnekleme kullanılabilir.
+* Renk uzayını **önceden quantize** edebilirsin (örneğin 256 yerine 32 seviye).
+* **Memoization** veya **önbellekleme** alt karışım sonuçlarını hızlandırır.
+* Eğer hedef renge yakınlık önem arz ediyorsa, **Lab renk uzayı** kullanmak (algısal yakınlık açısından) daha doğrudur.
+
+---
+
+## 🔍 Örnek Düşünce
+
+Elinde 8 renk var → 2’ye böl → her biri 4 renk içeriyor.
+Her 4 renk kümesinden olası 16 karışım çıkar (örneğin 2’li ortalamalar).
+Sonra 16×16 = 256 kombinasyon yerine sadece 32 alt küme karışımıyla çalışırsın.
+Bu **Divide and Conquer**, brute-force yaklaşıma göre çok daha verimlidir.
+
+---
+
+İstersen bu algoritmayı **gerçek bir Python örneğiyle** gösterebilirim (örneğin rastgele renkler ve hedef renk vererek, nasıl yakınlaştığını görsel olarak da gösterecek şekilde).
+Böyle bir örnek ister misin?
+
+"bunu pseudocode'a dönüştürebilir misin?"
+ChatGPT'nin cevabı;
+Tabii! Aşağıda anlattığım “renk karıştırarak hedef renge yaklaşma” problemine uygun **Divide and Conquer** temelli bir **pseudocode** versiyonu var.
+Yorum satırlarıyla birlikte, adım adım ve dilden bağımsız şekilde yazılmıştır 👇
+
+---
+
+### 🎨 Divide and Conquer ile Renk Karıştırma — Pseudocode
+
+```
+function FIND_CLOSEST_MIX(COLORS, TARGET):
+    # Eğer elimizde tek bir renk varsa, o rengi döndür
+    if LENGTH(COLORS) == 1:
+        return COLORS[0]
+
+    # Küme ikiye bölünür
+    MID = LENGTH(COLORS) / 2
+    LEFT_COLORS  = COLORS[0 : MID]
+    RIGHT_COLORS = COLORS[MID : END]
+
+    # Her alt kümede olası karışımları bul (rekürsif)
+    LEFT_MIXES  = GENERATE_MIXES(LEFT_COLORS)
+    RIGHT_MIXES = GENERATE_MIXES(RIGHT_COLORS)
+
+    BEST_MIX = NULL
+    MIN_DISTANCE = INFINITY
+
+    # Sol ve sağ alt karışımlardan en yakın çifti bul
+    for each L in LEFT_MIXES:
+        for each R in RIGHT_MIXES:
+            MIX = AVERAGE(L, R)
+            DIST = COLOR_DISTANCE(MIX, TARGET)
+            if DIST < MIN_DISTANCE:
+                MIN_DISTANCE = DIST
+                BEST_MIX = MIX
+
+    return BEST_MIX
+```
+
+---
+
+### 🧩 Alt Fonksiyonlar
+
+```
+function GENERATE_MIXES(COLORS):
+    # Eğer tek renk kaldıysa doğrudan döndür
+    if LENGTH(COLORS) == 1:
+        return [COLORS[0]]
+
+    # Küme ikiye bölünür
+    MID = LENGTH(COLORS) / 2
+    LEFT  = COLORS[0 : MID]
+    RIGHT = COLORS[MID : END]
+
+    LEFT_MIXES  = GENERATE_MIXES(LEFT)
+    RIGHT_MIXES = GENERATE_MIXES(RIGHT)
+
+    RESULT = []
+
+    # Sol ve sağ karışımları birleştirerek olası yeni karışımlar üret
+    for each L in LEFT_MIXES:
+        for each R in RIGHT_MIXES:
+            MIX = AVERAGE(L, R)
+            APPEND MIX to RESULT
+
+    return RESULT
+```
+
+---
+
+### 🎯 Yardımcı Fonksiyonlar
+
+```
+function AVERAGE(C1, C2):
+    # Renk bileşenlerinin ortalamasını al
+    return (
+        (C1.R + C2.R) / 2,
+        (C1.G + C2.G) / 2,
+        (C1.B + C2.B) / 2
+    )
+
+function COLOR_DISTANCE(C, TARGET):
+    # Euclidean mesafesi (RGB farkı)
+    return SQRT( (C.R - TARGET.R)^2 + (C.G - TARGET.G)^2 + (C.B - TARGET.B)^2 )
+```
+
+---
+
+### ⚡ Karmaşıklık
+
+* Brute-force arama: O(2^n)
+* Divide and conquer yaklaşımı: Yaklaşık O(n log n) ila O(n²) arası (uygulama detayına göre değişir)
+* Daha da optimize etmek için:
+
+  * Alt kümeleri **sıralayıp binary search** ile eşleştirmek (Meet-in-the-middle)
+  * **Memoization** ile tekrar eden karışımları önlemek mümkün
+
+---
+
+İstersen bu pseudocode’u Python koduna veya başka bir dilde çalışan versiyona çevirebilirim (örneğin görselleştirme ile birlikte).
+Hangisini istersin — Python, C++ yoksa sadece akış diyagramı şeklinde mi görmek istersin?
+
+Buradan sonra ChatGPT'den alt ve yardımcı fonksiyonları da pseudocode'a eklemesini istedim.
+ChatGPT'nin cevabı;
+Tabii! Aşağıda tüm parçaları birleştirilmiş, eksiksiz ve okunabilir biçimde düzenlenmiş **tam bir pseudocode** versiyonu var.
+Bu, renk karışımıyla hedef renge en yakın sonucu **divide and conquer** yaklaşımıyla bulan genel algoritmadır 👇
+
+---
+
+### 🎨 Renk Karıştırma — Divide and Conquer Pseudocode
+
+```
+##############################################################
+# ANA FONKSİYON
+##############################################################
+
+function FIND_CLOSEST_MIX(COLORS, TARGET):
+    # Eğer elimizde tek bir renk varsa, o rengi döndür
+    if LENGTH(COLORS) == 1:
+        return COLORS[0]
+
+    # Küme ikiye bölünür
+    MID = LENGTH(COLORS) / 2
+    LEFT_COLORS  = COLORS[0 : MID]
+    RIGHT_COLORS = COLORS[MID : END]
+
+    # Her alt kümede olası karışımları üret (rekürsif)
+    LEFT_MIXES  = GENERATE_MIXES(LEFT_COLORS)
+    RIGHT_MIXES = GENERATE_MIXES(RIGHT_COLORS)
+
+    BEST_MIX = NULL
+    MIN_DISTANCE = INFINITY
+
+    # Sol ve sağ alt karışımlardan hedef renge en yakın çifti bul
+    for each L in LEFT_MIXES:
+        for each R in RIGHT_MIXES:
+            MIX = AVERAGE(L, R)
+            DIST = COLOR_DISTANCE(MIX, TARGET)
+
+            if DIST < MIN_DISTANCE:
+                MIN_DISTANCE = DIST
+                BEST_MIX = MIX
+
+    return BEST_MIX
+
+
+##############################################################
+# ALT FONKSİYON: Alt kümelerden olası karışımları üretir
+##############################################################
+
+function GENERATE_MIXES(COLORS):
+    # Eğer tek renk varsa, liste olarak döndür
+    if LENGTH(COLORS) == 1:
+        return [COLORS[0]]
+
+    # Küme ikiye bölünür
+    MID = LENGTH(COLORS) / 2
+    LEFT  = COLORS[0 : MID]
+    RIGHT = COLORS[MID : END]
+
+    LEFT_MIXES  = GENERATE_MIXES(LEFT)
+    RIGHT_MIXES = GENERATE_MIXES(RIGHT)
+
+    RESULT = EMPTY_LIST
+
+    # Sol ve sağ karışımları ortalayarak yeni karışımlar oluştur
+    for each L in LEFT_MIXES:
+        for each R in RIGHT_MIXES:
+            MIX = AVERAGE(L, R)
+            APPEND MIX to RESULT
+
+    # Aynı zamanda mevcut renkleri de sonuç listesine dahil et
+    for each C in COLORS:
+        APPEND C to RESULT
+
+    return RESULT
+
+
+##############################################################
+# YARDIMCI FONKSİYON: İki rengin ortalamasını alır
+##############################################################
+
+function AVERAGE(C1, C2):
+    R = (C1.R + C2.R) / 2
+    G = (C1.G + C2.G) / 2
+    B = (C1.B + C2.B) / 2
+    return (R, G, B)
+
+
+##############################################################
+# YARDIMCI FONKSİYON: Renk farkını ölçer (Euclidean distance)
+##############################################################
+
+function COLOR_DISTANCE(C, TARGET):
+    dR = C.R - TARGET.R
+    dG = C.G - TARGET.G
+    dB = C.B - TARGET.B
+    return SQRT(dR^2 + dG^2 + dB^2)
+```
+
+---
+
+### 🧠 Özet
+
+* `FIND_CLOSEST_MIX` → ana kontrol akışı
+* `GENERATE_MIXES` → alt kümelerde olası renk karışımlarını üretir
+* `AVERAGE` → iki rengin ortalamasını hesaplar
+* `COLOR_DISTANCE` → hedef renge ne kadar yakın olduğunu ölçer
+
+---
+
+İstersen bu pseudocode’un **geliştirilmiş versiyonunu** (örneğin ağırlıklı karışım veya “k en yakın renk” yaklaşımlı) da yazabilirim.
+İster misin bir versiyon da **ağırlıklı karışımlar** (örneğin %30 mavi + %70 kırmızı gibi) desteklesin?
+
+Sondaki önerisini merak ettiğim için ağırlıklı karışımları destekleyen bir pseudocode yazmasını da istedim.
+ChatGPT'nin cevabı;
+Harika 👍 O zaman algoritmayı biraz daha genel hale getiriyoruz:
+Artık sadece “iki rengi eşit oranda karıştırmak” yerine, **farklı ağırlıklarda** karışım yapabileceğiz (örneğin %25 - %75 gibi).
+Bu, renk karışım uzayını daha zengin ve gerçekçi hale getirir.
+
+Aşağıda önce mantığı açıklayayım, sonra tam pseudocode’u vereyim 👇
+
+---
+
+## 🧩 Yeni Mantık
+
+Her iki renk karışımında artık:
+
+```
+MIX = w * C1 + (1 - w) * C2
+```
+
+şeklinde bir ağırlık `w` (0 ≤ w ≤ 1) kullanılacak.
+
+`w` değeri sürekli bir değişken olabileceğinden, pratikte belirli birkaç örnekleme kullanmak mantıklı:
+örneğin `w ∈ {0.25, 0.5, 0.75}` gibi.
+
+Bu sayede:
+
+* Karışım uzayını fazla büyütmeden daha esnek sonuçlar elde edebiliriz.
+* Divide and Conquer yaklaşımı yine geçerli kalır.
+
+---
+
+## 🎨 Ağırlıklı Karışım Destekli Divide and Conquer Pseudocode
+
+```
+##############################################################
+# ANA FONKSİYON
+##############################################################
+
+function FIND_CLOSEST_MIX(COLORS, TARGET):
+    if LENGTH(COLORS) == 1:
+        return COLORS[0]
+
+    MID = LENGTH(COLORS) / 2
+    LEFT_COLORS  = COLORS[0 : MID]
+    RIGHT_COLORS = COLORS[MID : END]
+
+    LEFT_MIXES  = GENERATE_MIXES(LEFT_COLORS)
+    RIGHT_MIXES = GENERATE_MIXES(RIGHT_COLORS)
+
+    BEST_MIX = NULL
+    MIN_DISTANCE = INFINITY
+
+    for each L in LEFT_MIXES:
+        for each R in RIGHT_MIXES:
+            for each w in WEIGHTS:               # Örnek: [0.25, 0.5, 0.75]
+                MIX = WEIGHTED_AVERAGE(L, R, w)
+                DIST = COLOR_DISTANCE(MIX, TARGET)
+
+                if DIST < MIN_DISTANCE:
+                    MIN_DISTANCE = DIST
+                    BEST_MIX = MIX
+
+    return BEST_MIX
+
+
+##############################################################
+# ALT FONKSİYON: Alt kümelerde olası karışımları üretir
+##############################################################
+
+function GENERATE_MIXES(COLORS):
+    if LENGTH(COLORS) == 1:
+        return [COLORS[0]]
+
+    MID = LENGTH(COLORS) / 2
+    LEFT  = COLORS[0 : MID]
+    RIGHT = COLORS[MID : END]
+
+    LEFT_MIXES  = GENERATE_MIXES(LEFT)
+    RIGHT_MIXES = GENERATE_MIXES(RIGHT)
+
+    RESULT = EMPTY_LIST
+
+    # Farklı ağırlıklarda alt karışımlar üret
+    for each L in LEFT_MIXES:
+        for each R in RIGHT_MIXES:
+            for each w in WEIGHTS:               # Örnek: [0.25, 0.5, 0.75]
+                MIX = WEIGHTED_AVERAGE(L, R, w)
+                APPEND MIX to RESULT
+
+    # Orijinal renkleri de dahil et
+    for each C in COLORS:
+        APPEND C to RESULT
+
+    return RESULT
+
+
+##############################################################
+# YARDIMCI FONKSİYON: Ağırlıklı ortalama ile iki rengi karıştırır
+##############################################################
+
+function WEIGHTED_AVERAGE(C1, C2, w):
+    R = w * C1.R + (1 - w) * C2.R
+    G = w * C1.G + (1 - w) * C2.G
+    B = w * C1.B + (1 - w) * C2.B
+    return (R, G, B)
+
+
+##############################################################
+# YARDIMCI FONKSİYON: Renk farkını ölçer (Euclidean distance)
+##############################################################
+
+function COLOR_DISTANCE(C, TARGET):
+    dR = C.R - TARGET.R
+    dG = C.G - TARGET.G
+    dB = C.B - TARGET.B
+    return SQRT(dR^2 + dG^2 + dB^2)
+
+
+##############################################################
+# SABİT PARAMETRE: Kullanılacak ağırlık değerleri
+##############################################################
+
+WEIGHTS = [0.25, 0.5, 0.75]
+```
+
+---
+
+## ⚡ Özet
+
+* Artık karışımlar sadece ortalama değil, **farklı oranlarda** olabilir.
+* Bu sayede hedef renge daha hassas şekilde yaklaşılır.
+* Karmaşıklık biraz artar, ama `|WEIGHTS|` küçük tutulduğu sürece yönetilebilir.
+* Daha iyi sonuçlar için `COLOR_DISTANCE` yerine CIE-Lab tabanlı bir metrik kullanılabilir.
+
+---
+
+İstersen bu pseudocode’u **Python** veya **C++** biçiminde gerçek çalışan bir örneğe dönüştürebilirim (örnek renkler ve hedef renk dahil).
+Hangisini tercih edersin?
+
