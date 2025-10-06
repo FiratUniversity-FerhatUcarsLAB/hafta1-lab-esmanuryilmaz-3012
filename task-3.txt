@@ -1,4 +1,219 @@
-Öğrenci No:
-AD-SOYAD:
+Öğrenci No: 250541033
+AD-SOYAD: Esmanur Yılmaz
 
 Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:
+Seçtiğim görev adı "Müzik Koleksiyonunu Düzenleme" ve bu görevi Microsoft Copilot ile yaptım.
+Öncelikle kendim müzik koleksiyonunu düzenlerken kullanılan kriterler için bir liste çıkardım. Bu listedeki kriterler; alfabetik sıralama, şarkıların dinlenilme sıklığı, şarkıların indirilme sırası ve sanatçıların isimlerinin alfabetik sırası. Bunlar telefondaki playlist'lerimizi düzenlerken bize sunulan seçenekler. Fakat ödeve müzik koleksiyonu yazdığınız için bu plak veya CD gibi gerçekten koleksiyonu olan kişiler için bir algoritma muhtemelen. Yine de hangisini ima ettiğinizi bilmediğim için Copilot'a ikisi için de ayrı bir algoritma yazdırdım.
+
+1. Telefondaki Playlist'lerimiz için;
+"Senden bana telefondaki playlistleri düzenleyebilmek için bir pseudocode yazmanı isteyeceğim. Bunun için kriterlerin; alfabetik sıralama, şarkıların dinlenilme sıklığı, şarkıların indirildiği tarihlere göre sıralama (en erkenden en geçe ve en geçten en erkene olmak üzere iki ayrı) ve sanatçıların isimlerinin alfabetik sıralamasına göre olacak."
+Copilot'un cevabı;
+Elbette Esmanur! Aşağıda, telefondaki müzik listelerini (playlistleri) belirttiğin kriterlere göre düzenleyebilecek bir pseudocode örneği hazırladım. Bu yapı, bir uygulama ya da script geliştirmek isteyen biri için temel mantığı açık şekilde ortaya koyar.
+
+---
+
+### 🎵 Playlist Düzenleyici Pseudocode
+
+```plaintext
+// Playlist öğesi tanımı
+class Song:
+    title           // Şarkı adı
+    artist          // Sanatçı adı
+    playCount       // Dinlenme sayısı
+    downloadDate    // İndirilme tarihi (YYYY-MM-DD formatında)
+
+// Playlist listesi
+playlist = [Song1, Song2, Song3, ..., SongN]
+
+// Fonksiyon: Alfabetik sıralama (şarkı adına göre)
+function sortByTitleAscending(playlist):
+    return playlist.sort(by = song.title, order = ascending)
+
+// Fonksiyon: Dinlenme sıklığına göre sıralama (çoktan aza)
+function sortByPlayCountDescending(playlist):
+    return playlist.sort(by = song.playCount, order = descending)
+
+// Fonksiyon: İndirilme tarihine göre sıralama (en erkenden en geçe)
+function sortByDownloadDateAscending(playlist):
+    return playlist.sort(by = song.downloadDate, order = ascending)
+
+// Fonksiyon: İndirilme tarihine göre sıralama (en geçten en erkene)
+function sortByDownloadDateDescending(playlist):
+    return playlist.sort(by = song.downloadDate, order = descending)
+
+// Fonksiyon: Sanatçı adına göre alfabetik sıralama
+function sortByArtistAscending(playlist):
+    return playlist.sort(by = song.artist, order = ascending)
+
+// Kullanıcıdan sıralama tercihini al
+function organizePlaylist(playlist, criteria):
+    if criteria == "title":
+        return sortByTitleAscending(playlist)
+    else if criteria == "playCount":
+        return sortByPlayCountDescending(playlist)
+    else if criteria == "downloadDateAsc":
+        return sortByDownloadDateAscending(playlist)
+    else if criteria == "downloadDateDesc":
+        return sortByDownloadDateDescending(playlist)
+    else if criteria == "artist":
+        return sortByArtistAscending(playlist)
+    else:
+        print("Geçersiz kriter seçildi.")
+        return playlist
+
+// Örnek kullanım
+sortedPlaylist = organizePlaylist(playlist, "playCount")
+```
+
+---
+
+Bu yapıyı bir mobil uygulamada, Python scriptinde veya başka bir programlama dilinde kolayca uyarlayabilirsin. İstersen bu pseudocode'u Python, JavaScript gibi bir dile çevirebilirim ya da kullanıcı arayüzüyle entegre bir versiyonunu da tasarlayabilirim. Hangisi ilgini çeker?
+
+Burada sadece tek bir eksiklik gördüm ve onun için yeni bir komut verdim. "dinleme sıklığına göre olan kısma azdan çoğa da ekle"
+Copilot'un cevabı;
+Tabii ki Esmanur! Dinlenme sıklığına göre sıralamayı hem çoktan aza hem de azdan çoğa olacak şekilde iki ayrı fonksiyonla ekleyebilirim. Güncellenmiş pseudocode aşağıda:
+
+---
+
+### 🎵 Playlist Düzenleyici Pseudocode (Güncellenmiş)
+
+```plaintext
+class Song:
+    title           // Şarkı adı
+    artist          // Sanatçı adı
+    playCount       // Dinlenme sayısı
+    downloadDate    // İndirilme tarihi (YYYY-MM-DD formatında)
+
+playlist = [Song1, Song2, Song3, ..., SongN]
+
+// Şarkı adına göre alfabetik sıralama
+function sortByTitleAscending(playlist):
+    return playlist.sort(by = song.title, order = ascending)
+
+// Dinlenme sıklığına göre sıralama (çoktan aza)
+function sortByPlayCountDescending(playlist):
+    return playlist.sort(by = song.playCount, order = descending)
+
+// Dinlenme sıklığına göre sıralama (azdan çoğa)
+function sortByPlayCountAscending(playlist):
+    return playlist.sort(by = song.playCount, order = ascending)
+
+// İndirilme tarihine göre sıralama (en erkenden en geçe)
+function sortByDownloadDateAscending(playlist):
+    return playlist.sort(by = song.downloadDate, order = ascending)
+
+// İndirilme tarihine göre sıralama (en geçten en erkene)
+function sortByDownloadDateDescending(playlist):
+    return playlist.sort(by = song.downloadDate, order = descending)
+
+// Sanatçı adına göre alfabetik sıralama
+function sortByArtistAscending(playlist):
+    return playlist.sort(by = song.artist, order = ascending)
+
+// Kullanıcıdan sıralama tercihini al
+function organizePlaylist(playlist, criteria):
+    if criteria == "title":
+        return sortByTitleAscending(playlist)
+    else if criteria == "playCountDesc":
+        return sortByPlayCountDescending(playlist)
+    else if criteria == "playCountAsc":
+        return sortByPlayCountAscending(playlist)
+    else if criteria == "downloadDateAsc":
+        return sortByDownloadDateAscending(playlist)
+    else if criteria == "downloadDateDesc":
+        return sortByDownloadDateDescending(playlist)
+    else if criteria == "artist":
+        return sortByArtistAscending(playlist)
+    else:
+        print("Geçersiz kriter seçildi.")
+        return playlist
+
+// Örnek kullanım
+sortedPlaylist = organizePlaylist(playlist, "playCountAsc")
+```
+
+---
+
+İstersen bu yapıyı bir mobil uygulama arayüzüne nasıl entegre edebileceğini de anlatabilirim. Veya bu pseudocode'u Python gibi bir dile çevirmemi ister misin?
+
+2. Müzik Koleksiyonu İçin;
+"Şimdi de müzik koleksiyonu olan bir kişinin , koleksiyonunu müzik tarzına göre (arabesk,pop,rock vb), en sevdiklerine ve en sevmediklerine, bir de son olarak sanatçılara ve albümlere göre düzenlemesinin pseudocode'unu yaz."
+Copilot'un cevabı;
+Harika bir istek Esmanur! Aşağıda, bir müzik koleksiyonu sahibinin koleksiyonunu müzik tarzına, kişisel beğenilere, sanatçılara ve albümlere göre düzenleyebilmesi için kapsamlı bir pseudocode hazırladım. Bu yapı, hem mantıksal sıralamayı hem de kullanıcı tercihlerini dikkate alır.
+
+---
+
+### 🎶 Müzik Koleksiyonu Düzenleyici Pseudocode
+
+```plaintext
+// Şarkı nesnesi tanımı
+class Song:
+    title           // Şarkı adı
+    artist          // Sanatçı adı
+    album           // Albüm adı
+    genre           // Müzik tarzı (arabesk, pop, rock, vb.)
+    rating          // Kullanıcının verdiği puan (1-5 arası)
+    isFavorite      // true/false - En sevdikleri
+    isDisliked      // true/false - En sevmedikleri
+
+// Koleksiyon listesi
+musicCollection = [Song1, Song2, Song3, ..., SongN]
+
+// Fonksiyon: Müzik tarzına göre gruplama
+function groupByGenre(musicCollection):
+    genreGroups = {}
+    for song in musicCollection:
+        if song.genre not in genreGroups:
+            genreGroups[song.genre] = []
+        genreGroups[song.genre].append(song)
+    return genreGroups
+
+// Fonksiyon: En sevdiklerini filtrele
+function filterFavorites(musicCollection):
+    return [song for song in musicCollection if song.isFavorite == true]
+
+// Fonksiyon: En sevmediklerini filtrele
+function filterDisliked(musicCollection):
+    return [song for song in musicCollection if song.isDisliked == true]
+
+// Fonksiyon: Sanatçıya göre gruplama
+function groupByArtist(musicCollection):
+    artistGroups = {}
+    for song in musicCollection:
+        if song.artist not in artistGroups:
+            artistGroups[song.artist] = []
+        artistGroups[song.artist].append(song)
+    return artistGroups
+
+// Fonksiyon: Albüme göre gruplama
+function groupByAlbum(musicCollection):
+    albumGroups = {}
+    for song in musicCollection:
+        if song.album not in albumGroups:
+            albumGroups[song.album] = []
+        albumGroups[song.album].append(song)
+    return albumGroups
+
+// Ana düzenleme fonksiyonu
+function organizeCollection(musicCollection, criteria):
+    if criteria == "genre":
+        return groupByGenre(musicCollection)
+    else if criteria == "favorites":
+        return filterFavorites(musicCollection)
+    else if criteria == "disliked":
+        return filterDisliked(musicCollection)
+    else if criteria == "artist":
+        return groupByArtist(musicCollection)
+    else if criteria == "album":
+        return groupByAlbum(musicCollection)
+    else:
+        print("Geçersiz düzenleme kriteri.")
+        return musicCollection
+
+// Örnek kullanım
+organized = organizeCollection(musicCollection, "genre")
+```
+
+---
+
+Bu yapı sayesinde bir müzik koleksiyonu hem tematik hem de duygusal tercihlere göre düzenlenebilir. İstersen bu pseudocode'u Python gibi bir dile çevirebilir, hatta bir mobil uygulama arayüzüyle nasıl entegre edileceğini de gösterebilirim. Hangisini istersin?
