@@ -1,4 +1,93 @@
-Öğrenci No:
-AD-SOYAD:
+Öğrenci No: 250541033
+AD-SOYAD: Esmanur Yılmaz
 
 Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:
+Benim seçtiğim günlük hayat problemi, her gün üniversiteye otobüsle gidip geldiğim için sık sık otobüs kartımda para olup olmadığını kontrol ediyorum ve eğer otobüs kartımdaki miktar 50 liranın altındaysa 200 lira, 50 ve 100 TL arasındaysa 100 lira ve 200 ile 200 TL'den daha fazla olduğunda ise para yüklemiyorum ve bunun algoritmasını yazdırarak başladım.
+Bu ödevi yaparken Google Gemini kullandım.
+"Her gün üniversiteye otobüsle gidip gelen bir öğrenci otobüs kartında para olup olmadığını kontrol ederken şunlara dikkat ediyor; eğer otobüs kartındaki miktar 50 liranın altındaysa 200 lira, 50 ve 100 TL arasındaysa 100 lira yüklüyor ve 200 ile 200 TL'den daha fazla olduğunda ise para yüklemiyor. Bunun önce algoritmasını sonra da if-if else ve loop'lu pseudocode'unu yazabilir misin?"
+Gemini'nin cevabı;
+Harika bir senaryo\! Öğrencinin otobüs kartı yükleme mantığı için algoritma ve ardından sözde kod (pseudocode) adımlarını yazalım.
+
+-----
+
+## Otobüs Kartı Yükleme Algoritması
+
+Bu algoritma, öğrencinin kartındaki mevcut bakiyeyi kontrol ederek ne kadar para yüklemesi gerektiğine karar verir.
+
+### **Algoritma Adımları**
+
+1.  **Başla.**
+2.  **Giriş:** Öğrencinin otobüs kartındaki **mevcut bakiyeyi (B)** al.
+3.  **Durum 1: Yükleme Gereksinimi (Yüksek Yükleme)**
+      * Eğer **Bakiye (B)** küçüktür ($<$) **50 TL** ise,
+          * Kartına **200 TL** yükle.
+          * **200 TL** yüklendi mesajını ver.
+          * Adım 7'ye git.
+4.  **Durum 2: Yükleme Gereksinimi (Orta Yükleme)**
+      * Eğer **Bakiye (B)** büyüktür veya eşittir ($\ge$) **50 TL** **VE** küçüktür ($<$) **100 TL** ise,
+          * Kartına **100 TL** yükle.
+          * **100 TL** yüklendi mesajını ver.
+          * Adım 7'ye git.
+5.  **Durum 3: Yükleme Gereksinimi (Minimum Yükleme)**
+      * Eğer **Bakiye (B)** büyüktür veya eşittir ($\ge$) **100 TL** **VE** küçüktür ($<$) **200 TL** ise,
+          * Kartına **100 TL** yükle. (Senaryoda 50-100 arası ve 100-200 arası için de 100 TL yükleme belirtilmiş, bu durumu tek bir **ELSE IF** ile de birleştirebiliriz, ancak senaryoya sadık kalıyoruz).
+          * **100 TL** yüklendi mesajını ver.
+          * Adım 7'ye git.
+6.  **Durum 4: Yükleme Gerekmiyor**
+      * Eğer **Bakiye (B)** büyüktür veya eşittir ($\ge$) **200 TL** ise,
+          * **Yükleme gerekmiyor, bakiye yeterli** mesajını ver.
+7.  **Bitir.**
+
+-----
+
+## Sözde Kod (Pseudocode)
+
+İstenen koşullu yapıları (**if, if-else**) ve **döngü (loop)** mantığını kullanarak sözde kodu yazalım. Öğrencinin bu kontrolü her gün yaptığı varsayımıyla bir döngü kurabiliriz.
+
+### **If-Else Yapısı Kullanımı**
+
+Aşağıdaki yapı, mantığı en verimli şekilde gösterir. Koşullar birbirini dışladığı için **IF - ELSE IF - ELSE** yapısı en uygunudur.
+
+```
+BASLA
+
+    // Her gün kontrol edildiği varsayımıyla bir günlük döngü
+    DONGU_BASLA (her gün)
+        
+        // 1. Girdi: Kart bakiyesini al
+        BAKIYE = KART_BAKIYESINI_AL()
+        
+        YUKLENECEK_MIKTAR = 0
+        
+        // 2. Koşulları kontrol et ve yükleme miktarını belirle
+        EGER (BAKIYE < 50) O_ZAMAN
+            // Durum 1: 50 TL'nin altı
+            YUKLENECEK_MIKTAR = 200
+            
+        YADA_EGER (BAKIYE >= 50 VE BAKIYE < 200) O_ZAMAN
+            // Durum 2 & 3: 50 TL ile 200 TL (hariç) arası
+            // (Senaryoda 50-100 arası ve 100-200 arası da 100 TL yüklenir denmiş. 
+            // Bu iki durumu BAKIYE < 200 koşulu altında birleştirebiliriz.)
+            YUKLENECEK_MIKTAR = 100
+            
+        YADA
+            // Durum 4: 200 TL veya üstü
+            YUKLENECEK_MIKTAR = 0
+            
+        SON_EGER
+        
+        // 3. Yükleme işlemini gerçekleştir veya bilgilendir
+        EGER (YUKLENECEK_MIKTAR > 0) O_ZAMAN
+            BAKIYE = BAKIYE + YUKLENECEK_MIKTAR
+            EKRANA_YAZ("Karta " + YUKLENECEK_MIKTAR + " TL yüklendi. Yeni bakiye: " + BAKIYE + " TL")
+        YADA
+            EKRANA_YAZ("Yükleme gerekmiyor. Mevcut bakiye: " + BAKIYE + " TL")
+        SON_EGER
+        
+        // Üniversiteye gidip gelme simülasyonu
+        BAKIYE = BAKIYE - (GUNLUK_OTOBUS_UCRETI * 2) // Varsayalım gidiş-dönüş ücreti düşülüyor
+        
+    DONGU_BITIR
+    
+BITIR
+```
