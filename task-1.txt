@@ -159,5 +159,3 @@ Böylece:
 * Döngü **baştan sona kontrol** altında.
 
 İstersen bu tarzı **flowchart (akış diyagramı)** gibi görselleştirerek de çizebilirim; bu mantığı görselde izlemek çok daha anlaşılır olur. İster misin?
-
-İki pseudocode da birbirine çok benziyor ama belli farkları var. Ama ChatGPT'nin kendi yazdığı, kodlama diline çok daha uygun.
