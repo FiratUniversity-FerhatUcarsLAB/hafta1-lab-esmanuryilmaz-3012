@@ -121,4 +121,45 @@ BITIR FONKSIYON
   * Bu pseudocode, listedeki ilk koşul karşılandığında hemen bir değer **döndürür** (`DON:`), böylece daha düşük öncelikli adımlara bakılmaz.
   * `KazanmaHamlesiMevcutsa()` ve `EngellemeHamlesiMevcutsa()` gibi yardımcı fonksiyonlar, tahtadaki 3'lü kombinasyonları (satır, sütun, köşegen) tarayan ve belirli bir sembol için kritik noktayı bulan alt rutinlerdir.
 
-Bu hali biraz 
+Bu hali biraz karmaşık gözüktüğü için Gemini'den biraz daha basitleştirip sözel ifadelere dökmesini istedim.
+Gemini'nin cevabı;
+Elbette! Bahsettiğimiz stratejiyi ve öncelik sırasını, kodlama bilgisi olmayan birinin bile kolayca anlayabileceği **en temel ve yalın adımlara** indirgeyelim.
+
+Bu basitleştirilmiş algoritma, sadece **kaybetmemeye** ve **kazanma fırsatlarını kaçırmamaya** odaklanır:
+
+---
+
+## En Basit Tic-Tac-Toe Kazanma Algoritması
+
+Her hamlenizde bu adımları **sırasıyla** kontrol edin ve ilk boş olan kuralı uygulayın:
+
+### 1. Kazan (Öncelik 1)
+* **Kendi sembolünüzle** ($X$ veya $O$) **oyunu bitirecek** bir hamle var mı?
+* **Evet ise:** Hemen oraya hamle yapın ve oyunu kazanın.
+
+### 2. Engelle (Öncelik 2)
+* **Rakibinizin** bir sonraki hamlede **oyunu kazanmasını sağlayacak** bir hamle var mı?
+* **Evet ise:** Hemen oraya hamle yapın ve rakibinizin kazanmasını **engelleyin**.
+
+### 3. Merkeze Yerleş (Öncelik 3)
+* **Merkez kare** ($5$. pozisyon) boş mu?
+* **Evet ise:** Merkeze hamle yapın. Bu, oyundaki en önemli karedir.
+
+### 4. Köşeye Yerleş (Öncelik 4)
+* **Köşelerden** ($1, 3, 7, 9$. pozisyonlar) herhangi biri boş mu?
+* **Evet ise:** Boş bir köşeye hamle yapın. Köşeler de güçlü pozisyonlardır.
+
+### 5. Boş Bir Yere Yerleş (Son Çare)
+* Yukarıdakilerin hiçbiri uygulanamıyorsa, tahtada **boş kalan herhangi bir yere** hamle yapın.
+
+---
+
+### Basitleştirilmiş Öncelik Özeti
+
+Bu, bir oyuncunun yapacağı en mantıklı hamlelerin özeti ve **kaybetmemeyi garantileyen** temel stratejidir:
+
+1.  **Kendi Kazanma Hamleni Yap.**
+2.  **Rakibin Kazanma Hamlesini Engelle.**
+3.  **Merkezi Kap.**
+4.  **Köşeleri Kap.**
+5.  **Kalan Bir Yere Oyna.**
